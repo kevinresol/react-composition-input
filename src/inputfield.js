@@ -71,12 +71,15 @@ class InputField extends Component {
     }
 
     render() {
-        const { onInputChange, ...restProps } = this.props
+        const { onInputChange, inputRef, ...restProps } = this.props
         return (
             <input
                 type='text'
                 {...restProps}
-                ref={(input)=>{this.input = input}}
+                ref={input => {
+                    this.input = input;
+                    if(inputRef) inputRef(input);
+                }}
                 value={this.state.value}
                 onChange={this.handleInputChange}
                 onCompositionStart={this.handleComposition}
