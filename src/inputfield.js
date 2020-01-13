@@ -16,6 +16,7 @@ class InputField extends Component {
     }
 
     static defaultProps = {
+        component: 'input',
         onChange: noop,
         onInputChange: noop
     }
@@ -71,21 +72,18 @@ class InputField extends Component {
     }
 
     render() {
-        const { onInputChange, inputRef, ...restProps } = this.props
-        return (
-            <input
-                type='text'
-                {...restProps}
-                ref={input => {
-                    this.input = input;
-                    if(inputRef) inputRef(input);
-                }}
-                value={this.state.value}
-                onChange={this.handleInputChange}
-                onCompositionStart={this.handleComposition}
-                onCompositionEnd={this.handleComposition}
-            />
-        )
+        const { component, onInputChange, inputRef, ...restProps } = this.props
+        return React.createElement(component, {
+            ...restProps,
+            ref: input => {
+                this.input = input;
+                if(inputRef) inputRef(input);
+            },
+            value: this.state.value,
+            onChange: this.handleInputChange,
+            onCompositionStart: this.handleComposition,
+            onCompositionEnd: this.handleComposition,
+        });
     }
 }
 
